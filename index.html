@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="th" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>WHAT-IF EP.1 — ถ้าซอมบี้บุกเตรียมอุดมฯ ปทุมธานี</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: "Leelawadee UI";
+        src: local("Leelawadee UI");
+      }
+      :root {
+        --ink: #f3e9d8;
+        --pink: #d6336c;
+        --navy: #14213d;
+        --red: #e63946;
+        --amber: #fca311;
+        --font-display: "Leelawadee UI", "Segoe UI", Tahoma, sans-serif;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1080px; height: 1920px; overflow: hidden;
+        background: #050408; font-family: var(--font-display);
+      }
+      #root { width: 100%; height: 100%; position: relative; overflow: hidden; }
+      .scene {
+        position: absolute; inset: 0; width: 100%; height: 100%;
+        overflow: hidden; display: flex; flex-direction: column;
+        align-items: center; justify-content: center;
+      }
+      video.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+      .shade {
+        position: absolute; inset: 0;
+        background: radial-gradient(120% 90% at 50% 40%, transparent 30%, rgba(3, 2, 6, 0.55) 100%);
+      }
+      .z { z-index: var(--z, 1); }
+
+      /* ---------- B1 ---------- */
+      .b1-tag {
+        position: absolute; top: 480px; left: 50%; margin-left: -220px;
+        padding: 14px 34px; background: rgba(230, 57, 70, 0.93); color: #fff;
+        font-size: 40px; font-weight: 800; letter-spacing: 0.12em; border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(230, 57, 70, 0.4);
+      }
+      .b1-title {
+        position: absolute; top: 820px; left: 60px; right: 60px; text-align: center;
+        color: var(--ink); font-weight: 800; font-size: 60px; line-height: 1.28;
+        text-shadow: 0 6px 30px rgba(0, 0, 0, 0.85);
+      }
+      .b1-title em { color: var(--pink); font-style: normal; }
+      .b1-dont {
+        position: absolute; top: 1230px; left: 0; right: 0; text-align: center;
+        color: var(--red); font-size: 170px; font-weight: 800; letter-spacing: 0.04em;
+        text-shadow: 0 10px 46px rgba(230, 57, 70, 0.55), 0 4px 18px rgba(0, 0, 0, 0.9);
+      }
+      .b1-loc {
+        position: absolute; top: 1540px; left: 50%; margin-left: -240px;
+        color: rgba(243, 233, 216, 0.85); font-size: 34px; font-weight: 600;
+        letter-spacing: 0.1em;
+      }
+
+      /* ---------- B2 phone ---------- */
+      #b2 { background: radial-gradient(130% 90% at 50% 20%, #3a0a0a 0%, #050408 70%); }
+      .b2-phone {
+        position: relative; width: 560px; height: 1150px; border-radius: 56px;
+        border: 8px solid #1f1a24; background: #0e0e14; padding: 38px 32px;
+        box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+      }
+      .b2-notch { width: 150px; height: 26px; border-radius: 20px; background: #000; margin: 0 auto 44px; }
+      .b2-clock { color: #8a8a9a; text-align: right; font-size: 28px; margin-bottom: 22px; }
+      .b2-alert {
+        background: linear-gradient(180deg, #5a0a0a, #9b1c1c); border-radius: 24px;
+        padding: 28px; color: #ffe5e5; box-shadow: 0 18px 60px rgba(155, 28, 28, 0.5);
+        border: 2px solid var(--red);
+      }
+      .b2-alert-head { font-size: 46px; font-weight: 800; display: flex; gap: 18px; align-items: center; }
+      .b2-alert-body { margin-top: 22px; font-size: 44px; font-weight: 700; line-height: 1.45; }
+      .b2-alert-foot { margin-top: 18px; font-size: 32px; opacity: 0.95; }
+
+      /* ---------- overlays ---------- */
+      .ov-w {
+        position: absolute; left: 60px; right: 60px; text-align: center;
+        color: var(--ink); font-weight: 800; line-height: 1.32;
+        text-shadow: 0 6px 30px rgba(0, 0, 0, 0.9);
+      }
+      .ov-w em { color: var(--red); font-style: normal; }
+      .ov-w em.amber { color: var(--amber); }
+      .ov-w em.pink { color: var(--pink); }
+
+      /* ---------- B3 ปิยราชรังสรรค์ ---------- */
+      .b3-tag { top: 300px; color: var(--amber); font-size: 42px; letter-spacing: 0.18em; }
+      .b3-word { top: 430px; font-size: 74px; }
+      .b3-sub { top: 620px; font-size: 52px; color: rgba(243, 233, 216, 0.92); }
+
+      /* ---------- B4 จ้อบ×บอล×ครูเกริก ---------- */
+      .b4-bubble {
+        position: absolute; max-width: 600px; padding: 26px 36px; border-radius: 30px;
+        font-size: 44px; font-weight: 700; color: #1a1420; line-height: 1.35;
+        box-shadow: 0 14px 44px rgba(0, 0, 0, 0.55);
+      }
+      .b4-who { display: block; font-size: 28px; font-weight: 800; opacity: 0.65; margin-bottom: 6px; }
+      .b4-b1 { top: 960px; left: 70px; background: #f3e9d8; border-bottom-left-radius: 8px; }
+      .b4-b2 { top: 1170px; right: 70px; background: #ffd9e2; border-bottom-right-radius: 8px; }
+      .b4-warn {
+        position: absolute; left: 60px; right: 60px; top: 1420px; padding: 32px 36px;
+        background: rgba(230, 57, 70, 0.96); color: #fff; border-radius: 26px;
+        font-size: 46px; font-weight: 800; text-align: center; line-height: 1.35;
+        box-shadow: 0 16px 50px rgba(230, 57, 70, 0.45);
+      }
+
+      /* ---------- B5 กฎ 6 ข้อ ---------- */
+      .b5-head { top: 240px; font-size: 66px; }
+      .b5-rule {
+        position: absolute; left: 70px; right: 70px; display: flex; gap: 26px; align-items: center;
+        background: rgba(255, 255, 255, 0.07); border: 2px solid rgba(252, 163, 17, 0.4);
+        border-radius: 24px; padding: 24px 34px; color: var(--ink); font-size: 44px; font-weight: 700;
+        text-shadow: 0 4px 22px rgba(0, 0, 0, 0.9);
+      }
+      .b5-num { color: var(--amber); font-weight: 800; font-size: 48px; width: 60px; flex: none; }
+      .b5-r1 { top: 470px; }
+      .b5-r2 { top: 680px; }
+      .b5-r3 { top: 890px; }
+      .b5-r4 { top: 1100px; }
+      .b5-r5 { top: 1310px; }
+      .b5-r6 { top: 1520px; border-color: rgba(230, 57, 70, 0.55); }
+      .b5-r6 .b5-num { color: var(--red); }
+
+      /* ---------- B6 ทวิสต์ ---------- */
+      .b6-word { top: 640px; font-size: 84px; }
+      .b6-sub { top: 900px; font-size: 50px; color: rgba(243, 233, 216, 0.9); }
+
+      /* ---------- B7 ---------- */
+      #b7 { background: transparent; }
+      .b7-big {
+        color: var(--ink); font-size: 92px; font-weight: 800; text-align: center; line-height: 1.4;
+        text-shadow: 0 6px 30px rgba(0, 0, 0, 0.9);
+      }
+      .b7-big em { color: var(--pink); font-style: normal; }
+      .b7-sub { color: #b9aebb; font-size: 48px; margin-top: 56px; text-align: center; }
+
+      /* ---------- B8 EP.2 tease ---------- */
+      #b8 { background: transparent; }
+      .b8-ep {
+        color: var(--red); font-size: 120px; font-weight: 800; text-align: center;
+        letter-spacing: 0.06em; text-shadow: 0 8px 40px rgba(230, 57, 70, 0.5);
+      }
+      .b8-line {
+        color: var(--ink); font-size: 66px; font-weight: 800; text-align: center; margin-top: 44px;
+        line-height: 1.4; text-shadow: 0 6px 30px rgba(0, 0, 0, 0.9);
+      }
+      .b8-soon { color: var(--amber); font-size: 54px; font-weight: 800; margin-top: 40px; text-align: center; }
+
+      /* ---------- global ---------- */
+      #ai-badge {
+        position: absolute; left: 40px; bottom: 46px; padding: 14px 26px;
+        background: rgba(255, 255, 255, 0.09); border: 1.5px solid rgba(255, 255, 255, 0.25);
+        color: #e7e0e6; border-radius: 999px; font-size: 30px; font-weight: 700;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="56"
+      data-width="1080"
+      data-height="1920"
+      data-track-kind="graphics"
+    >
+      <!-- B1 0-4 : hook — ตึกโรงเรียนกลางคืน + พาดหัว + "อย่า…" -->
+      <video id="b1-bg" class="bg" src="assets/blender/b1.mp4" data-start="0" data-duration="4" data-track-index="0" muted playsinline></video>
+      <div id="b1" class="scene clip z" data-start="0" data-duration="4" data-track-index="0" style="--z: 1">
+        <div class="shade"></div>
+        <div class="b1-tag" id="b1-tag">WHAT-IF EP.1</div>
+        <div class="b1-title" id="b1-title">
+          ถ้าซอมบี้บุก<br />โรงเรียนเตรียมอุดมศึกษาพัฒนาการปทุมธานี
+        </div>
+        <div class="b1-dont" id="b1-dont" data-layout-allow-overflow="true">อย่า…</div>
+        <div class="b1-loc" id="b1-loc">คืนวันหยุดสุดสัปดาห์</div>
+      </div>
+
+      <!-- B2 4-7 : Cell Broadcast เตือนเงียบ -->
+      <div id="b2" class="scene clip z" data-start="4" data-duration="3" data-track-index="0" style="--z: 2">
+        <div class="b2-phone" id="b2-phone">
+          <div class="b2-notch"></div>
+          <div class="b2-clock">07:58</div>
+          <div class="b2-alert" id="b2-alert">
+            <div class="b2-alert-head">🔕 เตือนเงียบ</div>
+            <div class="b2-alert-body">ซอมบี้ระบาดในพื้นที่<br />ห้ามส่งเสียง</div>
+            <div class="b2-alert-foot">CELL BROADCAST · ปทุมธานี</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- B3 7-12 : ห้องปิยราชรังสรรค์ — ผอ.ประกาศ -->
+      <video id="b3-bg" class="bg" src="assets/blender/c3.mp4" data-start="7" data-duration="5" data-track-index="0" muted playsinline></video>
+      <div id="b3" class="scene clip z" data-start="7" data-duration="5" data-track-index="0" style="--z: 2">
+        <div class="shade"></div>
+        <div class="ov-w b3-tag" id="b3-tag">📢 ผอ.ประกาศ</div>
+        <div class="ov-w b3-word" id="b3-word">ทุกคนไปที่<br /><em class="pink">ห้องปิยราชรังสรรค์</em></div>
+        <div class="ov-w b3-sub" id="b3-sub">แล้วปิดประตู<em class="amber">ให้สนิท</em></div>
+      </div>
+
+      <!-- B4 12-17.5 : จ้อบ×บอลคุยดัง → ครูเกริกเตือน -->
+      <video id="b4-bg" class="bg" src="assets/blender/c4.mp4" data-start="12" data-duration="5.5" data-track-index="0" muted playsinline></video>
+      <div id="b4" class="scene clip z" data-start="12" data-duration="5.5" data-track-index="0" style="--z: 2">
+        <div class="shade"></div>
+        <div class="b4-bubble b4-b1" id="b4-b1"><span class="b4-who">บอล</span>เมื่อวานเห็นจ้อบไหม?</div>
+        <div class="b4-bubble b4-b2" id="b4-b2"><span class="b4-who">จ้อบ</span>หา? ผมอยู่บ้านนะ...</div>
+        <div class="b4-warn" id="b4-warn">ครูเกริก: เงียบๆ…<br />เดี๋ยวซอมบี้มา</div>
+      </div>
+
+      <!-- B5 17.5-27.5 : กฎ 6 ข้อ -->
+      <video id="b5-bg" class="bg" src="assets/blender/b4.mp4" data-start="17.5" data-duration="10" data-track-index="0" muted playsinline></video>
+      <div id="b5" class="scene clip z" data-start="17.5" data-duration="10" data-track-index="0" style="--z: 2">
+        <div class="shade"></div>
+        <div class="ov-w b5-head" id="b5-head">กฎ <em class="amber">6 ข้อ</em> ในห้อง</div>
+        <div class="b5-rule b5-r1" id="b5-r1"><span class="b5-num">1</span> ปิดประตูให้สนิท</div>
+        <div class="b5-rule b5-r2" id="b5-r2"><span class="b5-num">2</span> ห้ามส่งเสียงดัง</div>
+        <div class="b5-rule b5-r3" id="b5-r3"><span class="b5-num">3</span> ห้ามเปิดไฟ</div>
+        <div class="b5-rule b5-r4" id="b5-r4"><span class="b5-num">4</span> ห้ามเดินคนเดียว</div>
+        <div class="b5-rule b5-r5" id="b5-r5"><span class="b5-num">5</span> อย่ายืนใกล้หน้าต่าง</div>
+        <div class="b5-rule b5-r6" id="b5-r6"><span class="b5-num">6</span> มีคนเคาะประตู — ห้ามเปิด</div>
+      </div>
+
+      <!-- B6 27.5-38 : ทวิสต์ -->
+      <video id="b6-bg" class="bg" src="assets/blender/b6.mp4" data-start="27.5" data-duration="10.5" data-track-index="0" muted playsinline></video>
+      <div id="b6" class="scene clip z" data-start="27.5" data-duration="10.5" data-track-index="0" style="--z: 2">
+        <div class="shade"></div>
+        <div class="ov-w b6-word" id="b6-word">ทุกอย่างถูกหมด<br /><em>ยกเว้นเรื่องเดียว</em></div>
+        <div class="ov-w b6-sub" id="b6-sub">เรื่องที่ผอ.ไม่เคยบอกใคร</div>
+      </div>
+
+      <!-- B7 38-47 : จ้อบจะรอดไหม -->
+      <video id="b7-bg" class="bg" src="assets/blender/b7.mp4" data-start="38" data-duration="9" data-track-index="0" muted playsinline
+             style="filter: blur(10px) brightness(0.45);"></video>
+      <div id="b7" class="scene clip z" data-start="38" data-duration="9" data-track-index="0" style="--z: 2">
+        <div class="b7-big" id="b7-big">จ้อบจะรอดไหม?<br /><em>เม้นมาครับ</em></div>
+        <div class="b7-sub" id="b7-sub">👇 คอมเมนต์ทายเลย</div>
+      </div>
+
+      <!-- B8 47-56 : EP.2 tease -->
+      <video id="b8-bg" class="bg" src="assets/blender/b8.mp4" data-start="47" data-duration="9" data-track-index="0" muted playsinline
+             style="filter: blur(8px) brightness(0.5);"></video>
+      <div id="b8" class="scene clip z" data-start="47" data-duration="9" data-track-index="0" style="--z: 2">
+        <div class="b8-ep" id="b8-ep">EP.2</div>
+        <div class="b8-line" id="b8-line">จ้อบมี<em style="color: var(--red); font-style: normal;">รอยข่วน</em>แล้ว…</div>
+        <div class="b8-soon" id="b8-soon">เร็วๆ นี้</div>
+      </div>
+
+      <div id="ai-badge" class="clip z" data-start="0" data-duration="56" data-track-index="3" style="--z: 99">เนื้อหาสร้างโดย AI</div>
+
+      <audio id="alert-1" class="clip" data-start="4.2" data-duration="2.5" data-track-index="6" src="assets/audio/alert.mp3"></audio>
+
+      <!-- VO — แต่ละช่วงมีอารมณ์ต่างกัน (rate/pitch ต่างกันตอนสร้าง) -->
+      <audio id="vo-1"  class="clip" data-start="0.4"  data-duration="7.06" data-track-index="5" src="assets/audio/vo1.mp3"></audio>
+      <audio id="vo-2"  class="clip" data-start="7.5"  data-duration="4.99" data-track-index="5" src="assets/audio/vo2.mp3"></audio>
+      <audio id="vo-3"  class="clip" data-start="12.7" data-duration="2.57" data-track-index="5" src="assets/audio/vo3.mp3"></audio>
+      <audio id="vo-3b" class="clip" data-start="15.4" data-duration="3.46" data-track-index="5" src="assets/audio/vo3b.mp3"></audio>
+      <audio id="vo-4"  class="clip" data-start="18.9" data-duration="6.53" data-track-index="5" src="assets/audio/vo4.mp3"></audio>
+      <audio id="vo-4b" class="clip" data-start="27.6" data-duration="3.41" data-track-index="5" src="assets/audio/vo4b.mp3"></audio>
+      <audio id="vo-5"  class="clip" data-start="31.2" data-duration="4.82" data-track-index="5" src="assets/audio/vo5.mp3"></audio>
+      <audio id="vo-6"  class="clip" data-start="38.5" data-duration="3.14" data-track-index="5" src="assets/audio/vo6.mp3"></audio>
+      <audio id="vo-7"  class="clip" data-start="47.5" data-duration="3.53" data-track-index="5" src="assets/audio/vo7.mp3"></audio>
+
+      <!-- SFX: boom/alert -->
+      <audio id="boom-1" class="clip" data-start="2.1"  data-duration="1.6" data-track-index="6" src="assets/audio/sfx/boom.mp3"></audio>
+      <audio id="boom-2" class="clip" data-start="31.2" data-duration="1.6" data-track-index="6" src="assets/audio/sfx/boom.mp3"></audio>
+      <audio id="boom-3" class="clip" data-start="47.3" data-duration="1.6" data-track-index="6" src="assets/audio/sfx/boom.mp3"></audio>
+
+      <!-- SFX: sting/riser -->
+      <audio id="sting-1" class="clip" data-start="15.4" data-duration="1.5" data-track-index="7" src="assets/audio/sfx/sting.mp3"></audio>
+      <audio id="sting-2" class="clip" data-start="27.6" data-duration="1.5" data-track-index="7" src="assets/audio/sfx/sting.mp3"></audio>
+      <audio id="riser-1" class="clip" data-start="29.4" data-duration="2.2" data-track-index="7" src="assets/audio/sfx/riser.mp3"></audio>
+
+      <!-- SFX: drone bed -->
+      <audio id="drone-1" class="clip" data-start="0" data-duration="56" data-track-index="8" src="assets/audio/sfx/drone.mp3"></audio>
+
+      <!-- SFX: heartbeat + knock -->
+      <audio id="heart-1" class="clip" data-start="18.9" data-duration="8.6" data-track-index="9" src="assets/audio/sfx/heartbeat.mp3"></audio>
+      <audio id="knock-1" class="clip" data-start="29.2" data-duration="1.4" data-track-index="9" src="assets/audio/sfx/knock.mp3"></audio>
+
+      <!-- SFX: whoosh transitions -->
+      <audio id="wh-1" class="clip" data-start="7.0"  data-duration="0.9" data-track-index="10" src="assets/audio/sfx/whoosh.mp3"></audio>
+      <audio id="wh-2" class="clip" data-start="17.6" data-duration="0.9" data-track-index="10" src="assets/audio/sfx/whoosh.mp3"></audio>
+      <audio id="wh-3" class="clip" data-start="38.2" data-duration="0.9" data-track-index="10" src="assets/audio/sfx/whoosh.mp3"></audio>
+      <audio id="wh-4" class="clip" data-start="47.1" data-duration="0.9" data-track-index="10" src="assets/audio/sfx/whoosh.mp3"></audio>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      var tl = gsap.timeline({ paused: true });
+
+      // B1 — hook
+      tl.fromTo("#b1-tag", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(2)" }, 0.5);
+      tl.fromTo("#b1-title", { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.3);
+      tl.fromTo("#b1-dont", { opacity: 0, scale: 2.2 }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(1.8)" }, 2.1);
+      tl.to("#b1-dont", { scale: 1.06, duration: 0.5, yoyo: true, repeat: 1, ease: "sine.inOut" }, 2.9);
+      tl.fromTo("#b1-loc", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 1.4);
+
+      // B2 — phone alert
+      tl.fromTo("#b2-phone", { y: 90, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" }, 4.15);
+      tl.fromTo("#b2-alert", { scale: 0.88, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.45, ease: "back.out(2.2)" }, 4.45);
+      tl.to("#b2-phone", { x: 12, duration: 0.08, yoyo: true, repeat: 9, ease: "none" }, 4.5);
+
+      // B3 — ปิยราชรังสรรค์
+      tl.fromTo("#b3-tag", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 7.2);
+      tl.fromTo("#b3-word", { opacity: 0, scale: 1.2 }, { opacity: 1, scale: 1, duration: 0.7, ease: "power3.out" }, 7.7);
+      tl.fromTo("#b3-sub", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 9.2);
+      tl.to("#b3-word", { scale: 1.05, duration: 0.8, yoyo: true, repeat: 1, ease: "sine.inOut" }, 10.2);
+
+      // B4 — จ้อบ×บอล + ครูเกริก (sync vo3 12.7 / vo3b 15.4 + sting)
+      tl.fromTo("#b4-b1", { opacity: 0, x: -90, scale: 0.9 }, { opacity: 1, x: 0, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 12.5);
+      tl.fromTo("#b4-b2", { opacity: 0, x: 90, scale: 0.9 }, { opacity: 1, x: 0, scale: 1, duration: 0.45, ease: "back.out(1.6)" }, 13.6);
+      tl.fromTo("#b4-warn", { opacity: 0, y: 60, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: "back.out(1.8)" }, 15.3);
+      tl.to("#b4-warn", { x: 10, duration: 0.07, yoyo: true, repeat: 7, ease: "none" }, 15.5);
+
+      // B5 — กฎ 6 ข้อ (sync vo4 18.9: เด้งทีละข้อตามที่อ่าน)
+      tl.fromTo("#b5-head", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 17.8);
+      tl.fromTo("#b5-r1", { opacity: 0, x: -120 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, 19.2);
+      tl.fromTo("#b5-r2", { opacity: 0, x: -120 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, 20.05);
+      tl.fromTo("#b5-r3", { opacity: 0, x: -120 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, 20.9);
+      tl.fromTo("#b5-r4", { opacity: 0, x: -120 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, 21.75);
+      tl.fromTo("#b5-r5", { opacity: 0, x: -120 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out" }, 22.6);
+      tl.fromTo("#b5-r6", { opacity: 0, x: -120, scale: 0.94 }, { opacity: 1, x: 0, scale: 1, duration: 0.55, ease: "back.out(1.5)" }, 23.5);
+      tl.to("#b5-r6", { scale: 1.04, duration: 0.7, yoyo: true, repeat: 2, ease: "sine.inOut" }, 25.4);
+
+      // B6 — ทวิสต์ (riser 29.4 → knock 29.2 → boom 31.2 + vo5)
+      tl.fromTo("#b6-word", { opacity: 0, scale: 1.18 }, { opacity: 1, scale: 1, duration: 0.6, ease: "power3.out" }, 31.2);
+      tl.fromTo("#b6-sub", { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "power2.out" }, 33.0);
+      tl.to("#b6-word", { scale: 1.05, duration: 0.7, yoyo: true, repeat: 5, ease: "sine.inOut" }, 34.8);
+
+      // B7 — จ้อบจะรอดไหม
+      tl.fromTo("#b7-big", { opacity: 0, y: 70 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 38.3);
+      tl.fromTo("#b7-sub", { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "power2.out" }, 39.4);
+      tl.to("#b7-big", { scale: 1.04, duration: 0.9, yoyo: true, repeat: 3, ease: "sine.inOut" }, 41.5);
+
+      // B8 — EP.2 tease
+      tl.fromTo("#b8-ep", { opacity: 0, scale: 1.6 }, { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.8)" }, 47.3);
+      tl.fromTo("#b8-line", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 48.2);
+      tl.fromTo("#b8-soon", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(2)" }, 49.2);
+      tl.to("#b8-soon", { scale: 1.06, duration: 0.9, yoyo: true, repeat: 3, ease: "sine.inOut" }, 51.0);
+
+      window.__timelines["main"] = tl;
+      window.__timelines["main"].seek(0);
+    </script>
+  </body>
+</html>

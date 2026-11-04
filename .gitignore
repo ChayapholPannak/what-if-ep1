@@ -1,0 +1,26 @@
+# Big render outputs — keep only the final videos under renders/
+blender/out/
+blender/out_test/
+*.blend
+*.blend1
+
+# HyperFrames working artifacts (snapshots/history/state)
+.hyperframes/artifacts/
+.hyperframes/trace/
+.hyperframes/history-id
+.hyperframes/render-outputs.json
+.hyperframes/video-state.json
+
+# Python build caches
+__pycache__/
+*.pyc
+
+# Local tooling / media cache
+node_modules/
+.DS_Store
+Thumbs.db
+*.log
+
+# Heavy intermediate assets (regeneratable .mp4 under assets/blender kept — they are source plates)
+# If the repo gets too big, uncomment:
+# assets/blender/*.mp4

@@ -1,0 +1,1 @@
+{"id":"sfx_001","type":"sfx","path":".media/audio/sfx/sfx_001.mp3","source":"bundled","description":"Notification chime — alert, message-in, toast/badge appears. Sync to the element entering.","duration":2.5,"provenance":{"provider":"bundled.sfx","prompt":"emergency broadcast alert siren","library_key":"notification"}}
